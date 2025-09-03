@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import "@/global.css"
 SplashScreen.preventAutoHideAsync();
 export default function RootNavigation() {
-	const [isLogin, setIsLogin] = useState(false);
+	const [isLogin, setIsLogin] = useState(true);
 	useEffect(() => {
 		setTimeout(() => {
 			SplashScreen.hideAsync();

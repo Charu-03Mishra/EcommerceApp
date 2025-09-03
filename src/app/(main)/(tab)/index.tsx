@@ -1,8 +1,10 @@
 import Images from "@/constants/Images";
 import Card from "@/src/component/Card/Card";
 import JwelleryVideoCard from "@/src/component/JwelleryVideoCard/JwelleryVideoCard";
-
+import OfferCard from "@/src/component/OfferCard/OfferCard";
+import { useNavigation } from "@react-navigation/native";
 import ProductHearder from "@/src/component/ProductHeader/ProductHearder";
+import TopFashionDress from "@/src/component/TopFashionDress/TopFashionDress";
 import TrandingCard from "@/src/component/TrandingCard/TrandingCard";
 import {
 	Montserrat_600SemiBold,
@@ -15,7 +17,9 @@ import {
 	FontAwesome6,
 	Ionicons,
 } from "@expo/vector-icons";
+import { useNavigationBuilder } from "@react-navigation/native";
 import { ResizeMode, Video } from "expo-av";
+import { DrawerActions } from "@react-navigation/native";
 import { useRef } from "react";
 
 import {
@@ -256,8 +260,113 @@ const JwlleryCardData = [
 	},
 ];
 
+const FashionCardData = [
+	{
+		id: "1",
+		images: Images.Fashion1,
+		title: "Women Floral Printed Kurta",
+		description: "Comfortable cotton kurta for daily wear.",
+		price: "₹1499",
+		type: "jpg",
+		oldPrice: "₹2499",
+		discount: "40% Off",
+		rating: 2.3,
+		reviews: "12,345",
+	},
+	{
+		id: "2",
+		images: Images.Fashion2,
+		title: "Men Slim Fit Casual Shirt",
+		description: "Stylish and breathable fabric for summer.",
+		price: "₹999",
+		oldPrice: "₹1899",
+		discount: "47% Off",
+		type: "mp4",
+		rating: 4,
+		reviews: "8,210",
+	},
+	{
+		id: "3",
+		images: Images.Fashion3,
+		title: "Women Party Wear Gown",
+		description: "Elegant evening gown with premium finish.",
+		price: "₹2999",
+		oldPrice: "₹4599",
+		type: "jpg",
+		discount: "35% Off",
+		rating: 4.6,
+		reviews: "5,678",
+	},
+	{
+		id: "4",
+		images: Images.Fashion4,
+		title: "Men Running Sports Shoes",
+		description: "Lightweight shoes with durable sole.",
+		price: "₹1799",
+		oldPrice: "₹3299",
+		discount: "45% Off",
+		type: "mp4",
+		rating: 2.4,
+		reviews: "15,420",
+	},
+	{
+		id: "5",
+		images: Images.Fashion5,
+		title: "Women Handbag",
+		description: "Trendy leather handbag with spacious design.",
+		price: "₹1299",
+		oldPrice: "₹2199",
+		discount: "41% Off",
+		type: "jpg",
+		rating: 5,
+		reviews: "9,876",
+	},
+	{
+		id: "6",
+		images: Images.Fashion6,
+		title: "Unisex Digital Smartwatch",
+		description: "Track fitness & notifications on the go.",
+		price: "₹2499",
+		oldPrice: "₹4999",
+		type: "mp4",
+		discount: "50% Off",
+		rating: 1.5,
+		reviews: "21,345",
+	},
+];
+
+const OfferCardData = [
+	{
+		id: "1",
+		images: Images.offercard,
+
+		discount: "Under 1000",
+	},
+	{
+		id: "2",
+		images: Images.offercard1,
+		title: "Men Slim Fit Casual Shirt",
+
+		discount: "Under 1500",
+	},
+	{
+		id: "3",
+		images: Images.offercard2,
+		title: "Women Party Wear Gown",
+
+		discount: "Under 500",
+	},
+	{
+		id: "4",
+		images: Images.offercard3,
+
+		discount: "Under 2500",
+	},
+];
+
 export default function HomeScreen() {
 	const videoRef = useRef(null);
+	 const navigation = useNavigation();
 	const simpleBrandsVideoRef = useRef(null);
 	const [fontsLoaded] = useFonts({
 		Montserrat_600SemiBold,
@@ -267,13 +376,13 @@ export default function HomeScreen() {
 		return null; // or a loader component
 	}
 	return (
-		<SafeAreaView className="flex-1  pt-4 px-3">
+		<SafeAreaView className=" bg-gray-200   pt-4 px-3">
 			<ScrollView
 				showsVerticalScrollIndicator={false}
-				contentContainerStyle={{ paddingBottom: 5 }}>
+				contentContainerStyle={{ paddingBottom: 4}}>
 				{/* 🔹 Header */}
 				<View className="flex-row justify-between items-center">
-					<FontAwesome6 name="bars-staggered" size={24} color="black" />
+					<FontAwesome6 name="bars-staggered" size={24} color="black"  onPress={() => navigation.dispatch(DrawerActions.openDrawer())} />
 
 					<View className="flex-row items-center gap-2">
 						<Image source={Images.Logo} className="w-[38px] h-[31px]" />
@@ -443,7 +552,7 @@ export default function HomeScreen() {
 						horizontal
 						showsHorizontalScrollIndicator={false}
 						contentContainerStyle={{ paddingRight: 15 }} // 👈 fixes last item cutoff
-						className="flex-1 mt-2 ">
+						className="flex-1 mt-2 mx-1 ">
 						<View className="flex-row gap-3">
 							{TrandingCardData.map((item, i) => (
 								<View
@@ -472,8 +581,8 @@ export default function HomeScreen() {
 						shadowRadius: 3,
 					}}>
 					<Video
-						ref={videoRef}
 						source={require("@/assets/FolderOfVideo/offerVideo.mp4")}
+						ref={videoRef}
 						style={{ width: "100%", height: 200 }}
 						shouldPlay
 						isLooping
@@ -527,27 +636,93 @@ export default function HomeScreen() {
 						</TouchableOpacity>
 					</View>
 
-					<ScrollView
-						horizontal
-						showsHorizontalScrollIndicator={false}
-						contentContainerStyle={{ paddingRight: 15 }} // 👈 fixes last item cutoff
-						className="flex-1 mt-2 ">
-						<View className="flex-row gap-3">
-							{TrandingCardData.map((item, i) => (
-								<View
-									className="bg-white rounded-[10px]  mb-2  "
-									style={{
-										elevation: 2,
-										shadowColor: "#93c5fd",
-										shadowOffset: { width: 0, height: 5 },
-										shadowOpacity: 0.2,
-										shadowRadius: 3,
-									}}>
-									<TrandingCard item={item} key={i} />
-								</View>
-							))}
-						</View>
-					</ScrollView>
+					<View className="mt-2 mx-1 flex-row flex-wrap gap-3">
+						{FashionCardData.map((item, i) => (
+							<View
+								key={item.id}
+								className="w-[48%] bg-white  rounded-[10px] overflow-hidden"
+								style={{
+									elevation: 5, // Android shadow
+									shadowColor: "#000", // iOS shadow
+									shadowOffset: { width: 0, height: 2 },
+									shadowOpacity: 0.2,
+									shadowRadius: 3,
+								}}>
+								<TopFashionDress item={item} />
+							</View>
+						))}
+					</View>
+				</View>
+
+				{/* <ScrollView
+					horizontal
+					showsHorizontalScrollIndicator={false}
+					contentContainerStyle={{ paddingRight: 15 }} // 👈 fixes last item cutoff
+					className="flex-1 flex-col  ">
+				
+					<View className="flex-row gap-3">
+						{JwlleryCardData.map((item, i) => (
+							<View
+								className="bg-white rounded-[10px] overflow-hidden   mb-2  "
+								style={{
+									elevation: 2,
+									shadowColor: "#93c5fd",
+									shadowOffset: { width: 0, height: 5 },
+									shadowOpacity: 0.2,
+									shadowRadius: 3,
+								}}>
+								<JwelleryVideoCard item={item} key={i} />
+							</View>
+						))}
+					</View>
+				</ScrollView> */}
+
+				<View
+					className="flex-1 mt-2 rounded-lg bg-white py-3"
+					style={{
+						elevation: 5, // Android shadow
+						shadowColor: "#000", // iOS shadow
+						shadowOffset: { width: 0, height: 3 },
+						shadowOpacity: 0.15,
+						shadowRadius: 4,
+					}}>
+					<View className="flex-row items-center  px-4 justify-between">
+						<Text
+							className="text-[16px] text-[#0a9396]"
+							style={{ fontFamily: "Montserrat_600SemiBold" }}>
+							Prices ka dhamaka 😱
+						</Text>
+
+						<TouchableOpacity
+							className="w-11 h-11 rounded-full bg-[#0a9396] items-center justify-center"
+							activeOpacity={0.7}
+							style={{
+								elevation: 4,
+								shadowColor: "#0a9396",
+								shadowOffset: { width: 0, height: 2 },
+								shadowOpacity: 0.25,
+								shadowRadius: 3,
+							}}>
+							<AntDesign name="arrowright" size={22} color="white" />
+						</TouchableOpacity>
+					</View>
+
+					<View className="mt-2 flex-row flex-wrap mx-2 gap-3">
+						{OfferCardData.map((item, i) => (
+							<View
+								key={item.id}
+								className="w-[48%] bg-white  rounded-[10px] overflow-hidden"
+								style={{
+									elevation: 5, // Android shadow
+									shadowColor: "#000", // iOS shadow
+									shadowOffset: { width: 0, height: 2 },
+									shadowOpacity: 0.2,
+									shadowRadius: 3,
+								}}>
+								<OfferCard item={item} />
+							</View>
+						))}
+					</View>
 				</View>
 			</ScrollView>
 		</SafeAreaView>

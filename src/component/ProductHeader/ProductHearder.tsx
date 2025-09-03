@@ -18,7 +18,7 @@ function ProductHearder() {
 
   return (
     <View
-      className="bg-red-600"
+      className=""
       id="carousel-component"
       dataSet={{ kind: "basic-layouts", name: "parallax" }}
     >
